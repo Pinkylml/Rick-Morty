@@ -15,20 +15,24 @@ function App() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalInfo, setTotalInfo] = useState(null);
 
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await getCharacters(filters, currentPage); 
+      const data = await getCharacters(filters, currentPage);
       if (data) {
         setCharacters(data.results);
-        setTotalPages(data.info.pages); 
-        setTotalInfo(data.info); 
+        setTotalPages(data.info.pages);
+        setTotalInfo(data.info);
+      } else {
+        setCharacters([])
       }
       setLoading(false);
+
     };
 
     fetchData();
-  }, [filters, currentPage]); 
+  }, [filters, currentPage]);
   return (
     <div className="p-4 container mx-auto">
       <Filters setFilters={setFilters} setCurrentPage={setCurrentPage} />
@@ -39,21 +43,26 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 5 }}
-
         >
           <p>Loading...</p>
         </motion.div>
       ) : (
         <>
+          {characters.length === 0 ? (
+            <p>There is no characters available</p>
+          ) : (
+            <>
+              <CharacterList characters={characters} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+              <Graphs characters={characters} totalInfo={totalInfo} />
+            </>
 
-          <Graphs characters={characters} totalInfo={totalInfo} />
-
-          <CharacterList characters={characters} />
-          <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          />
+          )
+          }
         </>
 
       )}

@@ -10,8 +10,16 @@ export const CharacterList = ({ characters }) => {
         <motion.div
           key={character.id}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+          animate={{ opacity: 1,  scale: 1 }}
+          //transition={{ duration: 0.3 }}
+          transition={{
+                duration: 1,
+                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }}
+          //style={box}
+          whileHover={{scale: 1.2}}
+          whileTap={{scale:0.95}}
+    
         >
           <CharacterCard character={character} />
         </motion.div>
@@ -19,3 +27,7 @@ export const CharacterList = ({ characters }) => {
     </div>
   );
 };
+
+
+
+
