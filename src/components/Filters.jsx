@@ -44,14 +44,17 @@ export const Filters = ({ setFilters, setCurrentPage }) => {
     <div className="max-w-3xl mx-auto mb-8">
       <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Find Your Favorite Characters</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <input
             type="text"
             placeholder="Search by name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="p-2 text-fuchsia-900 text-sm border rounded-lg shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "
           />
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 justify-center">
 
           {/* Filtro de estado con checkboxes */}
           <div className="flex flex-col">

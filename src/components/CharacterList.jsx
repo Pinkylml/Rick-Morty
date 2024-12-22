@@ -17,7 +17,7 @@ export const CharacterList = ({ characters }) => {
                 scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
           //style={box}
-          whileHover={{scale: 1.2}}
+          whileHover={{scale: 1.1}}
           whileTap={{scale:0.95}}
     
         >
