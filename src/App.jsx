@@ -34,7 +34,7 @@ function App() {
     fetchData();
   }, [filters, currentPage]);
   return (
-    <div className="p-4 container mx-auto bg-gradient-to-tr from-yellow-500 to-orange-500  ">
+    <div className="p-10 container mx-auto bg-gradient-to-tr from-pink-500 via-purple-500  to-indigo-500 ">
       <Filters setFilters={setFilters} setCurrentPage={setCurrentPage} />
 
       {loading ? (
