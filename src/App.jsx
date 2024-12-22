@@ -4,6 +4,7 @@ import { CharacterList } from './components/CharacterList';
 import { Filters } from './components/Filters';
 import { motion } from 'framer-motion';
 
+
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filters, setFilters] = useState({});
@@ -23,7 +24,7 @@ function App() {
   }, [filters]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 container mx-auto">
       <Filters setFilters={setFilters} />
       
       {loading ? (
