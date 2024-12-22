@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-export const Filters = ({ setFilters,setCurrentPage }) => {
+export const Filters = ({ setFilters, setCurrentPage }) => {
   const [name, setName] = useState('');
   const [status, setStatus] = useState([]); // Estado para múltiples selecciones
   const [species, setSpecies] = useState([]); // Estado para múltiples selecciones
@@ -34,8 +34,11 @@ export const Filters = ({ setFilters,setCurrentPage }) => {
     setSpecies([]);
     setGender([]);
     setFilters({});
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
+
+  // Verificar si hay filtros aplicados
+  const hasActiveFilters = name || status.length || species.length || gender.length;
 
   return (
     <div className="max-w-3xl mx-auto mb-8">
@@ -183,33 +186,38 @@ export const Filters = ({ setFilters,setCurrentPage }) => {
         </div>
       </form>
 
-      {(name || status.length || species.length || gender.length) && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-sm font-semibold text-gray-600 mb-2">Active Filters:</h3>
-          <div className="flex flex-wrap gap-2">
-            {name && (
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Name: {name}
-              </span>
-            )}
-            {status.length > 0 && (
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                Status: {status.join(', ')}
-              </span>
-            )}
-            {species.length > 0 && (
-              <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
-                Species: {species.join(', ')}
-              </span>
-            )}
-            {gender.length > 0 && (
-              <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
-                Gender: {gender.join(', ')}
-              </span>
-            )}
-          </div>
+      {/* Mostrar filtros activos o mensaje si no hay filtros */}
+      <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+        <h3 className="text-sm font-semibold text-gray-600 mb-2">Active Filters:</h3>
+        <div className="flex flex-wrap gap-2">
+          {hasActiveFilters ? (
+            <>
+              {name && (
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                  Name: {name}
+                </span>
+              )}
+              {status.length > 0 && (
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                  Status: {status.join(', ')}
+                </span>
+              )}
+              {species.length > 0 && (
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                  Species: {species.join(', ')}
+                </span>
+              )}
+              {gender.length > 0 && (
+                <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
+                  Gender: {gender.join(', ')}
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="text-gray-500 text-sm">No filters applied</span> // Mensaje cuando no hay filtros
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

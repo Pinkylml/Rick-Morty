@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await getCharacters(filters, currentPage); // Añadimos currentPage aquí
+      const data = await getCharacters(filters, currentPage); 
       if (data) {
         setCharacters(data.results);
         setTotalPages(data.info.pages); 
@@ -28,7 +28,7 @@ function App() {
     };
 
     fetchData();
-  }, [filters, currentPage]); // Añadimos currentPage como dependencia
+  }, [filters, currentPage]); 
   return (
     <div className="p-4 container mx-auto">
       <Filters setFilters={setFilters} setCurrentPage={setCurrentPage} />
@@ -38,7 +38,8 @@ function App() {
           className="text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 5 }}
+
         >
           <p>Loading...</p>
         </motion.div>
