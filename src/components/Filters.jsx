@@ -1,29 +1,40 @@
-// src/components/Filters.jsx
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-export const Filters = ({ setFilters }) => {
+export const Filters = ({ setFilters,setCurrentPage }) => {
   const [name, setName] = useState('');
-  const [status, setStatus] = useState('');
-  const [species, setSpecies] = useState('');
-  const [gender, setGender] = useState(''); // Nuevo estado para el género
+  const [status, setStatus] = useState([]); // Estado para múltiples selecciones
+  const [species, setSpecies] = useState([]); // Estado para múltiples selecciones
+  const [gender, setGender] = useState([]); // Estado para múltiples selecciones
+
+  // Función para manejar la selección múltiple
+  const handleCheckboxChange = (e, setter, type) => {
+    const value = e.target.value;
+
+    setter((prev) => {
+      // Si ya está seleccionado, lo eliminamos, si no, lo añadimos
+      return prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setCurrentPage(1)
     setFilters({
       name,
-      status,
-      species,
-      gender, // Añadir género a los filtros
+      status: status.length ? status : undefined,
+      species: species.length ? species : undefined,
+      gender: gender.length ? gender : undefined,
     });
   };
 
   const clearFilters = () => {
     setName('');
-    setStatus('');
-    setSpecies('');
-    setGender(''); // Limpiar el género también
+    setStatus([]);
+    setSpecies([]);
+    setGender([]);
     setFilters({});
+    setCurrentPage(1)
   };
 
   return (
@@ -38,38 +49,121 @@ export const Filters = ({ setFilters }) => {
             onChange={(e) => setName(e.target.value)}
             className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All Status</option>
-            <option value="Alive">Alive</option>
-            <option value="Dead">Dead</option>
-            <option value="unknown">Unknown</option>
-          </select>
-          <select
-            value={species}
-            onChange={(e) => setSpecies(e.target.value)}
-            className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All Species</option>
-            <option value="Human">Human</option>
-            <option value="Alien">Alien</option>
-            <option value="Humanoid">Humanoid</option>
-          </select>
-          {/* Filtro de género */}
-          <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All Genders</option>
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
-            <option value="Genderless">Genderless</option>
-            <option value="Unknown">Unknown</option>
-          </select>
+
+          {/* Filtro de estado con checkboxes */}
+          <div className="flex flex-col">
+            <h3 className="font-semibold mb-2">Status:</h3>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Alive"
+                checked={status.includes('Alive')}
+                onChange={(e) => handleCheckboxChange(e, setStatus, 'status')}
+                className="mr-2"
+              />
+              Alive
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Dead"
+                checked={status.includes('Dead')}
+                onChange={(e) => handleCheckboxChange(e, setStatus, 'status')}
+                className="mr-2"
+              />
+              Dead
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="unknown"
+                checked={status.includes('unknown')}
+                onChange={(e) => handleCheckboxChange(e, setStatus, 'status')}
+                className="mr-2"
+              />
+              Unknown
+            </label>
+          </div>
+
+          {/* Filtro de especie con checkboxes */}
+          <div className="flex flex-col">
+            <h3 className="font-semibold mb-2">Species:</h3>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Human"
+                checked={species.includes('Human')}
+                onChange={(e) => handleCheckboxChange(e, setSpecies, 'species')}
+                className="mr-2"
+              />
+              Human
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Alien"
+                checked={species.includes('Alien')}
+                onChange={(e) => handleCheckboxChange(e, setSpecies, 'species')}
+                className="mr-2"
+              />
+              Alien
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Humanoid"
+                checked={species.includes('Humanoid')}
+                onChange={(e) => handleCheckboxChange(e, setSpecies, 'species')}
+                className="mr-2"
+              />
+              Humanoid
+            </label>
+          </div>
+
+          {/* Filtro de género con checkboxes */}
+          <div className="flex flex-col">
+            <h3 className="font-semibold mb-2">Gender:</h3>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Female"
+                checked={gender.includes('Female')}
+                onChange={(e) => handleCheckboxChange(e, setGender, 'gender')}
+                className="mr-2"
+              />
+              Female
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Male"
+                checked={gender.includes('Male')}
+                onChange={(e) => handleCheckboxChange(e, setGender, 'gender')}
+                className="mr-2"
+              />
+              Male
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Genderless"
+                checked={gender.includes('Genderless')}
+                onChange={(e) => handleCheckboxChange(e, setGender, 'gender')}
+                className="mr-2"
+              />
+              Genderless
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                value="Unknown"
+                checked={gender.includes('Unknown')}
+                onChange={(e) => handleCheckboxChange(e, setGender, 'gender')}
+                className="mr-2"
+              />
+              Unknown
+            </label>
+          </div>
         </div>
         
         <div className="flex justify-center gap-4">
@@ -89,7 +183,7 @@ export const Filters = ({ setFilters }) => {
         </div>
       </form>
 
-      {(name || status || species || gender) && ( // Agregar el filtro de género en la verificación
+      {(name || status.length || species.length || gender.length) && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
           <h3 className="text-sm font-semibold text-gray-600 mb-2">Active Filters:</h3>
           <div className="flex flex-wrap gap-2">
@@ -98,19 +192,19 @@ export const Filters = ({ setFilters }) => {
                 Name: {name}
               </span>
             )}
-            {status && (
+            {status.length > 0 && (
               <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                Status: {status}
+                Status: {status.join(', ')}
               </span>
             )}
-            {species && (
+            {species.length > 0 && (
               <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
-                Species: {species}
+                Species: {species.join(', ')}
               </span>
             )}
-            {gender && (
+            {gender.length > 0 && (
               <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
-                Gender: {gender}
+                Gender: {gender.join(', ')}
               </span>
             )}
           </div>
