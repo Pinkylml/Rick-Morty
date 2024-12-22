@@ -3,6 +3,7 @@ import { getCharacters } from './api';
 import { CharacterList } from './components/CharacterList';
 import { Filters } from './components/Filters';
 import { motion } from 'framer-motion';
+import { Graphs } from './components/Graphs';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       if (data) {
         setCharacters(data.results);
       }
+      console.log(data.results)
       setLoading(false);
     };
 
@@ -37,7 +39,11 @@ function App() {
           <p>Loading...</p>
         </motion.div>
       ) : (
-        <CharacterList characters={characters} />
+        <> 
+          <Graphs characters={characters} />
+          <CharacterList characters={characters} />
+        </>
+       
       )}
     </div>
   );
